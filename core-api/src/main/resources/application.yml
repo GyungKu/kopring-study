@@ -5,6 +5,7 @@ spring:
   config:
     import:
       - rdb.yml
+      - user.yml
 
 ---
 spring.config.activate.on-profiles: local
