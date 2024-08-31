@@ -7,6 +7,7 @@ import com.auth0.jwt.exceptions.JWTDecodeException
 import com.auth0.jwt.exceptions.SignatureVerificationException
 import com.auth0.jwt.exceptions.TokenExpiredException
 import com.auth0.jwt.interfaces.DecodedJWT
+import com.example.kopring_study.domain.exception.ErrorEnum
 import com.example.kopring_study.domain.exception.GlobalException
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
@@ -41,15 +42,15 @@ class JwtProvider (@Value("\${jwt.secret-key}") private val secretKey: String) {
         return try {
             JWT.require(algorithm).build().verify(token)
         } catch (e: TokenExpiredException) {
-            throw GlobalException("토큰이 만료되었습니다.", 400)
+            throw GlobalException(ErrorEnum.TOKEN_EXPIRED)
         } catch (e: SignatureVerificationException) {
-            throw GlobalException("유효하지 않은 토큰 서명입니다.", 400)
+            throw GlobalException(ErrorEnum.INVALID_SIGNATURE)
         } catch (e: AlgorithmMismatchException) {
-            throw GlobalException("토큰 알고리즘이 일치하지 않습니다.", 400)
+            throw GlobalException(ErrorEnum.ALGORITHM_MISMATCH)
         } catch (e: JWTDecodeException) {
-            throw GlobalException("잘못된 JWT 형식입니다.", 400)
+            throw GlobalException(ErrorEnum.INVALID_JWT_FORMAT)
         } catch (e: Exception) {
-            throw GlobalException("토큰 검증에 실패했습니다.", 400)
+            throw GlobalException(ErrorEnum.TOKEN_VALIDATION_FAILED)
         }
     }
 
