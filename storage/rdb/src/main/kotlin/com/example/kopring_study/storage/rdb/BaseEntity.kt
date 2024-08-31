@@ -1,4 +1,4 @@
-package com.example.kopring_study.storage.db_main
+package com.example.kopring_study.storage.rdb
 
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType

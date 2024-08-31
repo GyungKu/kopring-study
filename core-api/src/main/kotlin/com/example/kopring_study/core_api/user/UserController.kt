@@ -2,6 +2,7 @@ package com.example.kopring_study.core_api.user
 
 import com.example.kopring_study.domain.user.User
 import com.example.kopring_study.domain.user.UserService
+import jakarta.servlet.http.HttpServletRequest
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -23,6 +24,12 @@ class UserController(
         )
         val id = userService.create(user)
         return ResponseEntity.ok(id)
+    }
+
+    @PostMapping("/login")
+    fun login(@RequestBody loginUserRequest: LoginUserRequest): ResponseEntity<Unit> {
+        val token = userService.login(loginUserRequest.toDomain())
+        return ResponseEntity.ok().header("Authorization", token).build()
     }
 
 }

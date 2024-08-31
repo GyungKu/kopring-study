@@ -1,0 +1,7 @@
+spring.config.activate.on-profiles: local
+
+jwt:
+  secret-key: 7L2U7ZSE66eB7Iqk7YSw65SU66W87JyE7ZWc7Iuc7YGs66a/7YKk
+
+---
+spring.config.activate.on-profiles: dev

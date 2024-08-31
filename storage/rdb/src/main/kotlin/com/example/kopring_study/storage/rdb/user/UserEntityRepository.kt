@@ -13,11 +13,15 @@ internal class UserEntityRepository(
         val userEntity = userJpaRepository.save(
             UserEntity(
             id = user.id,
-            name = user.name,
+            name = user.name!!,
             email = user.email,
             password = user.password!!
         ))
         return userEntity.id!!
+    }
+
+    override fun findByEmailOrNull(email: String): User? {
+        return userJpaRepository.findByEmail(email)?.toDomain()
     }
 
 }

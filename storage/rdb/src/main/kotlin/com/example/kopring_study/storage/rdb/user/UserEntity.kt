@@ -1,6 +1,7 @@
 package com.example.kopring_study.storage.rdb.user
 
-import com.example.kopring_study.storage.db_main.BaseEntity
+import com.example.kopring_study.domain.user.User
+import com.example.kopring_study.storage.rdb.BaseEntity
 import jakarta.persistence.*
 
 @Entity
@@ -18,4 +19,13 @@ internal class UserEntity(
         protected set
     var password = password
         protected set
+
+    fun toDomain(): User {
+        return User(
+            id = id,
+            name = name,
+            email = email,
+            password = password
+        )
+    }
 }
