@@ -7,9 +7,9 @@ import com.auth0.jwt.exceptions.JWTDecodeException
 import com.auth0.jwt.exceptions.SignatureVerificationException
 import com.auth0.jwt.exceptions.TokenExpiredException
 import com.auth0.jwt.interfaces.DecodedJWT
+import com.example.kopring_study.domain.exception.GlobalException
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
-import java.lang.Exception
 import java.util.*
 
 @Component
@@ -22,7 +22,6 @@ class JwtProvider (@Value("\${jwt.secret-key}") private val secretKey: String) {
         const val BEARER_PREFIX = "Bearer "
     }
 
-    // 유저 ROLE 을 추가하게 되면 claim 을 추가할 것
     fun createToken(userId: String): String {
         val date = Date()
         return BEARER_PREFIX + JWT.create()
@@ -42,15 +41,15 @@ class JwtProvider (@Value("\${jwt.secret-key}") private val secretKey: String) {
         return try {
             JWT.require(algorithm).build().verify(token)
         } catch (e: TokenExpiredException) {
-            throw RuntimeException("토큰이 만료되었습니다.")
+            throw GlobalException("토큰이 만료되었습니다.", 400)
         } catch (e: SignatureVerificationException) {
-            throw RuntimeException("유효하지 않은 토큰 서명입니다.")
+            throw GlobalException("유효하지 않은 토큰 서명입니다.", 400)
         } catch (e: AlgorithmMismatchException) {
-            throw RuntimeException("토큰 알고리즘이 일치하지 않습니다.")
+            throw GlobalException("토큰 알고리즘이 일치하지 않습니다.", 400)
         } catch (e: JWTDecodeException) {
-            throw RuntimeException("잘못된 JWT 형식입니다.")
+            throw GlobalException("잘못된 JWT 형식입니다.", 400)
         } catch (e: Exception) {
-            throw RuntimeException("토큰 검증에 실패했습니다.")
+            throw GlobalException("토큰 검증에 실패했습니다.", 400)
         }
     }
 
