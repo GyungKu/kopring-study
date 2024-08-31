@@ -11,4 +11,5 @@ dependencies {
     runtimeOnly(project(":storage:rdb"))
 
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-security")
 }

@@ -4,6 +4,8 @@ import com.example.kopring_study.domain.user.User
 import com.example.kopring_study.domain.user.UserService
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.http.ResponseEntity
+import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -30,6 +32,11 @@ class UserController(
     fun login(@RequestBody loginUserRequest: LoginUserRequest): ResponseEntity<Unit> {
         val token = userService.login(loginUserRequest.toDomain())
         return ResponseEntity.ok().header("Authorization", token).build()
+    }
+
+    @GetMapping("/check")
+    fun check(@AuthenticationPrincipal userId: Long): ResponseEntity<Long> {
+        return ResponseEntity.ok(userId)
     }
 
 }
