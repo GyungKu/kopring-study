@@ -4,6 +4,7 @@ import com.example.kopring_study.domain.user.User
 import com.example.kopring_study.domain.user.UserService
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -34,9 +35,16 @@ class UserController(
         return ResponseEntity.ok().header("Authorization", token).build()
     }
 
-    @GetMapping("/check")
-    fun check(@AuthenticationPrincipal userId: Long): ResponseEntity<Long> {
-        return ResponseEntity.ok(userId)
+    @GetMapping("/check-user")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    fun userCheck(@AuthenticationPrincipal user: User): ResponseEntity<User> {
+        return ResponseEntity.ok(user)
+    }
+
+    @GetMapping("/check-admin")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    fun adminCheck(@AuthenticationPrincipal user: User): ResponseEntity<User> {
+        return ResponseEntity.ok(user)
     }
 
 }

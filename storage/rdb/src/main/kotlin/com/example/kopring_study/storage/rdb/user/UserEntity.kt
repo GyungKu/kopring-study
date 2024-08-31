@@ -1,6 +1,7 @@
 package com.example.kopring_study.storage.rdb.user
 
 import com.example.kopring_study.domain.user.User
+import com.example.kopring_study.domain.user.UserRoleEnum
 import com.example.kopring_study.storage.rdb.BaseEntity
 import jakarta.persistence.*
 
@@ -11,13 +12,16 @@ internal class UserEntity(
     val id: Long? = null,
     name: String,
     email: String,
-    password: String
+    password: String,
+    role: UserRoleEnum
 ): BaseEntity() {
-    var name = name
+    var name: String = name
         protected set
-    var email = email
+    var email: String = email
         protected set
-    var password = password
+    var password: String = password
+        protected set
+    var role: UserRoleEnum = role
         protected set
 
     fun toDomain(): User {
@@ -25,7 +29,8 @@ internal class UserEntity(
             id = id,
             name = name,
             email = email,
-            password = password
+            password = password,
+            role = role
         )
     }
 }

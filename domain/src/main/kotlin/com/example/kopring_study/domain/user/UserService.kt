@@ -23,4 +23,8 @@ class UserService(
         }
         return jwtProvider.createToken(findUser.id.toString())
     }
+
+    fun getById(id: Long): User {
+        return userReader.getById(id)
+    }
 }
