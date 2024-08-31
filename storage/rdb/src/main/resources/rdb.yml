@@ -27,7 +27,7 @@ spring:
 kopring-study:
   datasource:
     main:
-      driver-class-name: org.h2.driver
+      driver-class-name: org.h2.Driver
       jdbc-url: jdbc:h2:mem:kopring-study;MODE=MySQL;DB_CLOSE_DELAY=1;DB_CLOSE_ON_EXIT=FALSE
       username: sa
       pool-name: main-db-pool
