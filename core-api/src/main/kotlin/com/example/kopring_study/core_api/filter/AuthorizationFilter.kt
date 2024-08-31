@@ -35,9 +35,9 @@ class AuthorizationFilter(
                 val userId = jwtProvider.getUserIdFromToken(token)
                 setAuthenticate(userId)
             } catch (e: GlobalException) {
-                val errorResponse = CustomErrorResponse(e.message!!, e.status)
+                val errorResponse = CustomErrorResponse(e.error.message, e.error.status)
                 response.characterEncoding = "UTF-8"
-                response.status = e.status
+                response.status = e.error.status
                 response.contentType = "application/json"
                 response.writer.write(objectMapper.writeValueAsString(errorResponse))
                 return

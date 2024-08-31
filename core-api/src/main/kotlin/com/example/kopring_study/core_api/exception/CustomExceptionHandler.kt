@@ -10,8 +10,8 @@ class CustomExceptionHandler {
 
     @ExceptionHandler(GlobalException::class)
     fun globalExceptionHandle(e: GlobalException): ResponseEntity<CustomErrorResponse> {
-        val response = CustomErrorResponse(message = e.message!!, status = e.status)
-        return ResponseEntity.status(e.status).body(response)
+        val response = CustomErrorResponse(e.error.message, e.error.status)
+        return ResponseEntity.status(e.error.status).body(response)
     }
 
 }

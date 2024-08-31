@@ -1,5 +1,6 @@
 package com.example.kopring_study.domain.user
 
+import com.example.kopring_study.domain.exception.ErrorEnum
 import com.example.kopring_study.domain.exception.GlobalException
 import com.example.kopring_study.domain.jwt.JwtProvider
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -20,7 +21,7 @@ class UserService(
     fun login(user: User): String {
         val findUser = userReader.getByEmail(user.email)
         if (!passwordEncoder.matches(user.password, findUser.password)) {
-            throw GlobalException("일치하지 않는 비밀번호", 400)
+            throw GlobalException(ErrorEnum.PASSWORD_MISMATCH)
         }
         return jwtProvider.createToken(findUser.id.toString())
     }
