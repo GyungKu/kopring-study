@@ -17,10 +17,13 @@ internal class UserEntity(
 ): BaseEntity() {
     var name: String = name
         protected set
+    @Column(unique = true, nullable = false)
     var email: String = email
         protected set
+    @Column(nullable = false)
     var password: String = password
         protected set
+    @Enumerated(EnumType.STRING)
     var role: UserRoleEnum = role
         protected set
 
